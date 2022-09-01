@@ -1,0 +1,12 @@
+.header__link {
+  display: flex;
+  max-width: 142px;
+  max-height: 33px;
+}
+
+@media screen and (max-width: 768px) {
+  .header__link {
+    margin-left: 27px;
+  }
+}
+

@@ -1,0 +1,19 @@
+.footer__copyright {
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 22px;
+  color: #545454;
+  transition-property: opacity;
+  transition-duration: .3s;
+}
+
+@media screen and (max-width: 767px) {
+  .footer__copyright {
+    font-size: 14px;
+    line-height: 17px;
+  }
+}
+
+
+
+

@@ -1,0 +1,10 @@
+.popup__input_type_login {
+  color:  #FFFFFF;
+  border-bottom: 2px solid #CCCCCC;
+  background: transparent;
+
+}
+
+.popup__input_type_login::placeholder {
+  color: #CCCCCC;
+}
