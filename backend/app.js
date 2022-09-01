@@ -8,9 +8,7 @@ const cookieParser = require('cookie-parser');
 const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const NotFoundError = require('./utils/notfound');
-
-// const userRouter = require('./routes/users');
-// const cardRouter = require('./routes/cards');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { signUpValidation, signInValidation } = require('./middlewares/validation');
 const errorsHandler = require('./middlewares/errors');
@@ -32,14 +30,26 @@ app.use(helmet());
 
 app.use(auth);
 
+app.use(requestLogger);
+
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
+
 app.post('/signin', signInValidation, login);
 app.post('/signup', signUpValidation, createUser);
 app.use('/users', auth, require('./routes/users'));
 app.use('/cards', auth, require('./routes/cards'));
 
+
+
 app.use('*', (req, res, next) => next(
   new NotFoundError('Такой страницы не существует :('),
 ));
+
+app.use(errorLogger);
 
 app.use(errors());
 
