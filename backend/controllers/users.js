@@ -9,6 +9,7 @@ const { messages } = require('../utils/errors');
 const { JWT_SECRET } = require('../utils/constants');
 const NotFoundError = require('../utils/notfound');
 const BadRequestError = require('../utils/badrequest');
+const ConflictError = require('../utils/conflicterror');
 
 const options = {
   runValidators: true,
@@ -53,9 +54,10 @@ module.exports.createUser = (req, res, next) => {
   User.findOne({ email })
     .then((user) => {
       if (user) {
-        const err = new Error('Пользователь с таким email уже существует');
+        const err = new ConflictError('Пользователь с таким email уже существует');
         err.statusCode = 409;
         next(err);
+        return;
       }
       bcrypt.hash(password, 10)
         .then((hash) => User.create({
